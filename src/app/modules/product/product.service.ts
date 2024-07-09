@@ -16,7 +16,7 @@ const getAllProductsFromDB = async () => {
 }
 
 // get single all products
-const getSingleProductFromDB = async (id: string) => {
+const getProductByIdFromDB = async (id: string) => {
   const result = await Product.findById({ _id: id, isDeleted: false })
 
   return result
@@ -48,7 +48,7 @@ const deleteProductFromDB = async (id: string) => {
 export const ProductServices = {
   productCreateIntoDB,
   getAllProductsFromDB,
-  getSingleProductFromDB,
+  getProductByIdFromDB,
   singleProductUpdateFromDB,
   deleteProductFromDB,
 }
