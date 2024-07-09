@@ -1,3 +1,4 @@
+import AppError from '../../errors/AppError'
 import { TProduct } from './product.interface'
 import { Product } from './product.model'
 
@@ -10,15 +11,17 @@ const productCreateIntoDB = async (payload: TProduct) => {
 
 // get all products
 const getAllProductsFromDB = async () => {
-  const result = await Product.find({ isDeleted: false })
+  const result = await Product.find({})
 
   return result
 }
 
 // get single all products
 const getProductByIdFromDB = async (id: string) => {
-  const result = await Product.findById({ _id: id, isDeleted: false })
-
+  const result = await Product.findById({ _id: id })
+  if (!result) {
+    throw new AppError(404, 'Product not found')
+  }
   return result
 }
 
@@ -31,6 +34,10 @@ const singleProductUpdateFromDB = async (
     new: true,
   })
 
+  if (!result) {
+    throw new AppError(404, 'Product not found')
+  }
+
   return result
 }
 
@@ -41,6 +48,10 @@ const deleteProductFromDB = async (id: string) => {
     { isDeleted: true },
     { new: true },
   )
+
+  if (!result) {
+    throw new AppError(404, 'Product not found')
+  }
 
   return result
 }
