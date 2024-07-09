@@ -1,3 +1,4 @@
+import QueryBuilder from '../../builder/QueryBuilder'
 import AppError from '../../errors/AppError'
 import { TProduct } from './product.interface'
 import { Product } from './product.model'
@@ -10,9 +11,17 @@ const productCreateIntoDB = async (payload: TProduct) => {
 }
 
 // get all products
-const getAllProductsFromDB = async () => {
-  const result = await Product.find({})
+const getAllProductsFromDB = async (query: Record<string, unknown>) => {
+  //   const productQuery = new QueryBuilder(Product.find(), query)
+  //     .search(['name', 'brand'])
+  //     .filter()
+  //     .sort()
+  //     .paginate()
+  //     .fields()
 
+  //   return productQuery
+
+  const result = await Product.find()
   return result
 }
 
