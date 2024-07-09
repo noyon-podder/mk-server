@@ -6,9 +6,17 @@ import { ProductControllers } from './product.cotroller'
 const router = Router()
 
 router.post(
-  '/create-product',
+  '/',
   validateRequest(ProductValidation.productCreateValidationSchema),
   ProductControllers.createProduct,
 )
+
+router.get('/', ProductControllers.getAllProducts)
+
+router.get('/:id', ProductControllers.getProductById)
+
+router.put('/:id', ProductControllers.updateProduct)
+
+router.delete('/:id', ProductControllers.deleteProduct)
 
 export const ProductRoutes = router
