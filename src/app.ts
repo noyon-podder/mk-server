@@ -11,7 +11,7 @@ app.use(express.json())
 app.use(cors())
 
 // whole project router call here
-app.use('/api', MainRouter)
+app.use('/api/v1', MainRouter)
 
 // check routing
 app.get('/', (req: Request, res: Response) => {
