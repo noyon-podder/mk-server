@@ -55,10 +55,7 @@ const updateProduct = catchAsync(async (req, res) => {
 
 // delete a product
 const deleteProduct = catchAsync(async (req, res) => {
-  const result = await ProductServices.singleProductUpdateFromDB(
-    req.params.id,
-    req.body,
-  )
+  const result = await ProductServices.deleteProductFromDB(req.params.id)
 
   sendResponse(res, {
     statusCode: 200,

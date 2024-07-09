@@ -15,7 +15,11 @@ router.get('/', ProductControllers.getAllProducts)
 
 router.get('/:id', ProductControllers.getProductById)
 
-router.put('/:id', ProductControllers.updateProduct)
+router.put(
+  '/:id',
+  validateRequest(ProductValidation.productUpdateValidationSchema),
+  ProductControllers.updateProduct,
+)
 
 router.delete('/:id', ProductControllers.deleteProduct)
 

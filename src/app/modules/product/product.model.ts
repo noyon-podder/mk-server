@@ -27,6 +27,13 @@ const productSchema = new Schema<TProduct>(
       type: Number,
       required: true,
     },
+    image: {
+      type: String,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 )

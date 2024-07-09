@@ -5,4 +5,6 @@ export type TProduct = {
   price: number
   rating: number
   quantity: number
+  image: string
+  isDeleted: boolean
 }
