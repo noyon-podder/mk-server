@@ -24,6 +24,7 @@ const productUpdateValidationSchema = z.object({
       .string()
       .min(1, { message: 'Description is required' })
       .optional(),
+    image: z.string().min(1, { message: 'Image is required' }).optional(),
     price: z
       .number()
       .min(0, { message: 'Price must be a positive number' })

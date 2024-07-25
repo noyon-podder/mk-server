@@ -29,6 +29,10 @@ const productSchema = new Schema<TProduct>(
     },
     image: {
       type: String,
+      required: true,
+    },
+    hoverImage: {
+      type: String,
     },
     isDeleted: {
       type: Boolean,

@@ -7,4 +7,5 @@ export type TProduct = {
   quantity: number
   image: string
   isDeleted: boolean
+  hoverImage: string
 }
