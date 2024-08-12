@@ -1,4 +1,5 @@
-import QueryBuilder from '../../builder/QueryBuilder'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// import QueryBuilder from '../../builder/QueryBuilder'
 import AppError from '../../errors/AppError'
 import { TProduct } from './product.interface'
 import { Product } from './product.model'
@@ -12,17 +13,68 @@ const productCreateIntoDB = async (payload: TProduct) => {
 
 // get all products
 const getAllProductsFromDB = async (query: Record<string, unknown>) => {
-  //   const productQuery = new QueryBuilder(Product.find(), query)
-  //     .search(['name', 'brand'])
-  //     .filter()
-  //     .sort()
-  //     .paginate()
-  //     .fields()
+  try {
+    const {
+      searchTerm,
+      brand,
+      rating,
+      minQuantity,
+      maxQuantity,
+      minPrice,
+      maxPrice,
+      sort,
+    } = query
 
-  //   return productQuery
+    const filter: any = {}
 
-  const result = await Product.find()
-  return result
+    // search product into name and brand
+    if (searchTerm) {
+      filter.$or = [
+        { name: { $regex: searchTerm, $options: 'i' } },
+        { brand: { $regex: searchTerm, $options: 'i' } },
+      ]
+    }
+
+    // Filter by brand
+    if (brand) {
+      filter.brand = brand
+    }
+
+    // Filter by rating
+    if (rating) {
+      filter.rating = { $gte: Number(rating) }
+    }
+
+    // Filter by price range
+    if (minPrice || maxPrice) {
+      filter.price = {}
+      if (minPrice) filter.price.$gte = Number(minPrice)
+      if (maxPrice) filter.price.$lte = Number(maxPrice)
+    }
+
+    // Filter by quantity range
+    if (minQuantity || maxQuantity) {
+      filter.quantity = {}
+      if (minQuantity) filter.quantity.$gte = Number(minQuantity)
+      if (maxQuantity) filter.quantity.$lte = Number(maxQuantity)
+    }
+
+    // Determine sorting order
+    const sortOption: any = {}
+    if (sort === 'price-asc') {
+      sortOption.price = 1 // Price low to high
+    } else if (sort === 'price-desc') {
+      sortOption.price = -1 // Price high to low
+    } else {
+      sortOption.createdAt = -1 // Default to sort by most recently added (newest first)
+    }
+
+    const result = await Product.find(filter).sort(sortOption)
+
+    return result
+  } catch (err: any) {
+    throw new AppError(500, err.message)
+  }
 }
 
 // get single all products
