@@ -62,11 +62,11 @@ const getAllProductsFromDB = async (query: Record<string, unknown>) => {
     // Determine sorting order
     const sortOption: any = {}
     if (sort === 'price-asc') {
-      sortOption.price = 1 // Price low to high
+      sortOption.price = 1
     } else if (sort === 'price-desc') {
-      sortOption.price = -1 // Price high to low
+      sortOption.price = -1
     } else {
-      sortOption.createdAt = -1 // Default to sort by most recently added (newest first)
+      sortOption.createdAt = -1
     }
 
     const result = await Product.find(filter).sort(sortOption)
